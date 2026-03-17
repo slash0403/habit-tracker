@@ -19,11 +19,7 @@ A clean, personal habit tracking web app built with pure HTML, CSS, and JavaScri
 - Multi-user support — different accounts stay completely separate in the same browser
 - All data saved locally in the browser, no account or server needed
 
----
 
-## Screenshots
-
-> Login page → Home → Graphs → Achievements
 
 ---
 
