@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+
+    <!-- ── TOP HEADER ── -->
+    <header class="top-header">
+
+      <!-- Row 1: centred quote + profile button anchored top-right -->
+      <div class="header-top-row">
+        <p class="motivation-quote">Loading quote...</p>
+        <button class="profile-btn" id="profile-btn">P</button>
+      </div>
+
+      <!-- Row 2: navigation tabs -->
+      <nav class="main-nav">
+        <button class="nav-btn active-nav" data-section="home">Home</button>
+        <button class="nav-btn" data-section="graphs">Graphs</button>
+        <button class="nav-btn" data-section="achievements">Achievements</button>
+      </nav>
+
+    </header>
+
+    <!-- ── MAIN CONTENT ── -->
+    <main>
+
+      <!-- HOME -->
+      <section class="page-section" id="home">
+
+        <div class="dot-grid-wrapper">
+          <div class="dot-grid-header">
+            <span class="dot-grid-title">90-Day Overview</span>
+            <div class="dot-legend">
+              <span class="legend-item"><span class="legend-dot green"></span>All done</span>
+              <span class="legend-item"><span class="legend-dot yellow"></span>Partial</span>
+              <span class="legend-item"><span class="legend-dot red"></span>Missed</span>
+              <span class="legend-item"><span class="legend-dot future"></span>Future</span>
+            </div>
+          </div>
+          <div class="dot-grid" id="dot-grid"></div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-text">
+            <div class="progress-count">0 / 0</div>
+            <div class="progress-sublabel">Today's habits done</div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-percent">0%</div>
+          </div>
+        </div>
+
+        <!-- Date switcher -->
+        <div class="date-switcher">
+          <button class="date-nav-btn" id="prev-date">&#8249;</button>
+          <div class="date-display">
+            <span id="active-date-label">Today</span>
+            <span id="active-date-value"></span>
+          </div>
+          <button class="date-nav-btn" id="next-date">&#8250;</button>
+          <button class="back-to-today hidden" id="back-to-today">Back to Today</button>
+        </div>
+
+        <form class="add-habit-form">
+          <input type="text" placeholder="Add a new habit..." />
+          <button type="submit">+ Add</button>
+        </form>
+
+        <div class="habits-list"></div>
+      </section>
+
+      <!-- GRAPHS -->
+      <section class="page-section hidden" id="graphs">
+        <h2 class="section-title">Graphs</h2>
+        <div class="graphs-content" id="graphs-content"></div>
+      </section>
+
+      <!-- ACHIEVEMENTS -->
+      <section class="page-section hidden" id="achievements">
+        <h2 class="section-title">Achievements</h2>
+        <div class="achievements-content" id="achievements-content"></div>
+      </section>
+
+    </main>
+
+    <!-- ── WELCOME MODAL (first-time users) ── -->
+    <div class="modal-overlay hidden" id="welcome-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Welcome aboard! 🌱</h3>
+        </div>
+        <div class="modal-body">
+          <p class="welcome-msg">
+            You're all set! Today is your tracking start date.
+            Add your first habit using the input below.
+          </p>
+          <button class="modal-save" id="welcome-close">Let's go →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADD HABIT MODAL (opens before habit is created) ── -->
+    <div class="modal-overlay hidden" id="add-habit-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>New Habit</h3>
+          <button class="modal-close" id="add-habit-modal-close">&#10005;</button>
+        </div>
+        <div class="modal-body">
+
+          <label class="modal-label">Habit Name</label>
+          <input class="modal-input" id="new-habit-name" type="text" placeholder="e.g. Morning run" />
+
+          <div class="modal-row">
+            <div class="modal-field">
+              <label class="modal-label">Start Date</label>
+              <input class="modal-input" id="new-habit-start" type="date" />
+            </div>
+            <div class="modal-field">
+              <label class="modal-label">Goal Date (optional)</label>
+              <input class="modal-input" id="new-habit-goal" type="date" />
+            </div>
+          </div>
+
+          <label class="modal-label">Description (optional)</label>
+          <textarea class="modal-input modal-textarea" id="new-habit-desc"
+                    placeholder="What is this habit about?"></textarea>
+
+          <button class="modal-save" id="new-habit-save">Add Habit</button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROFILE MODAL ── -->
+    <div class="modal-overlay hidden" id="profile-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Profile</h3>
+          <button class="modal-close" id="profile-modal-close">&#10005;</button>
+        </div>
+        <div class="modal-body">
+
+          <label class="modal-label">Your Name</label>
+          <input class="modal-input" id="profile-name" type="text" placeholder="Enter your name" />
+
+          <!-- Email is read-only — it's the user's unique key -->
+          <label class="modal-label">Email</label>
+          <input class="modal-input" id="profile-email" type="email" readonly
+                 style="opacity:0.5;cursor:not-allowed" />
+
+          <label class="modal-label">Date of Birth</label>
+          <input class="modal-input" id="profile-dob" type="date" />
+
+          <label class="modal-label">Bio</label>
+          <textarea class="modal-input modal-textarea" id="profile-bio"
+                    placeholder="A little about yourself..."></textarea>
+
+          <!-- Member since — read-only, set from user's startDate -->
+          <div class="profile-since" id="profile-since"></div>
+
+          <button class="modal-save" id="profile-modal-save">Save Changes</button>
+          <button class="modal-danger" id="profile-logout">Log Out</button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HABIT DETAIL MODAL ── -->
+    <div class="modal-overlay hidden" id="habit-modal">
+      <div class="modal modal-wide">
+        <div class="modal-header">
+          <h3 id="habit-modal-title">Habit Detail</h3>
+          <button class="modal-close" id="habit-modal-close">&#10005;</button>
+        </div>
+        <div class="modal-body">
+
+          <label class="modal-label">Description</label>
+          <textarea class="modal-input modal-textarea" id="habit-desc"
+                    placeholder="What is this habit about?"></textarea>
+
+          <div class="modal-row">
+            <div class="modal-field">
+              <label class="modal-label">Start Date</label>
+              <input class="modal-input" id="habit-start-date" type="date" />
+            </div>
+            <div class="modal-field">
+              <label class="modal-label">Goal Date</label>
+              <input class="modal-input" id="habit-goal-date" type="date" />
+            </div>
+          </div>
+
+          <div class="modal-toggle-row">
+            <span class="modal-label" style="margin-bottom:0">Reminder</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="habit-reminder-toggle" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="reminder-time-section hidden" id="reminder-time-section">
+            <label class="modal-label">Reminder Time</label>
+            <select class="modal-input modal-select" id="habit-reminder-time">
+              <option value="06:00">6:00 AM — Early bird</option>
+              <option value="08:00">8:00 AM — Morning</option>
+              <option value="12:00">12:00 PM — Midday</option>
+              <option value="18:00">6:00 PM — Evening</option>
+              <option value="21:00">9:00 PM — Night</option>
+            </select>
+          </div>
+
+          <!-- Individual habit dot pattern — label and content set by JS -->
+          <div class="habit-detail-dots-label" id="habit-detail-dots-label">Progress</div>
+          <div class="habit-detail-dots" id="habit-detail-dots"></div>
+
+          <button class="modal-save" id="habit-modal-save">Save Changes</button>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+
+  </body>
+
+</html>

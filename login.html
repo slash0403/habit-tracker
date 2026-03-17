@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habit Tracker — Welcome</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="login-page">
+
+    <div class="login-container">
+      <div class="login-card">
+
+        <span class="login-logo">🌱</span>
+        <h1 class="login-title">Habit Tracker</h1>
+        <p class="login-subtitle">Build better habits, one day at a time.</p>
+
+        <!-- Shows today's date — becomes the user's tracking start date -->
+        <div class="login-date-box">
+          <span class="login-date-chip">Your start date</span>
+          <span class="login-date-value" id="login-today-date">—</span>
+        </div>
+
+        <form class="login-form" id="login-form">
+
+          <label class="modal-label" for="login-email">Email</label>
+          <input class="modal-input" id="login-email" type="email"
+                 placeholder="you@example.com" autocomplete="email" required />
+
+          <!-- Status message shown after email blur: "Welcome back, Yash!" or "New account" -->
+          <div class="login-status" id="login-status"></div>
+
+          <label class="modal-label" for="login-name">Your Name</label>
+          <input class="modal-input" id="login-name" type="text"
+                 placeholder="e.g. Yash" autocomplete="name" />
+
+          <button class="modal-save login-submit" type="submit" id="login-submit">
+            Sign Up →
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+
+    <script src="login.js"></script>
+
+  </body>
+
+</html>
